@@ -64,3 +64,36 @@ const renderParties = () => {
           await getParties();
           renderParties();
         });
+
+        return $li;
+    });
+  
+    $partyList.replaceChildren(...$parties);
+  };
+  
+  // === Script ===
+  const init = async () => {
+    await getParties();
+    renderParties();
+  };
+  
+  init();
+  
+  // Add a new party when form is submitted
+  const $form = document.querySelector("form");
+  $form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+  
+    const date = new Date($form.date.value).toISOString();
+    const party = {
+      name: $form.name.value,
+      description: $form.description.value,
+      date,
+      location: $form.location.value,
+    };
+  
+    await addParty(party);
+  
+    await getParties();
+    renderParties();
+  });
