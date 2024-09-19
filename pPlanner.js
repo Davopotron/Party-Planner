@@ -16,3 +16,20 @@ const getParties = async () => {
     console.error(e);
   }
 };
+
+/** Sends a POST request to the API */
+const addParty = async (party) => {
+    try {
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(party),
+      });
+      if (!response.ok) {
+        const parsed = await response.json();
+        throw new Error(parsed.error.message);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
